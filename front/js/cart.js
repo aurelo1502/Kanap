@@ -159,8 +159,8 @@ function checkForm() {
   // regExp pour vérifier données saisies par utilisateur
   let emailReg =
     /^([a-zA-Z0-9]+(?:[._-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,})$/g;
-  let regAdress = /^(([a-zA-Zà-ùÀ-Ù0-9\-\.']+)(\ )?){0,7}$/g;
-  let reg = /^(([a-zA-Zà-ùÀ-Ù\-\.']+)(\ )?){0,7}$/g;
+  let regAdress = /^(([a-zA-Zà-ùÀ-Ù0-9\-\.',]+)(\ )?){0,7}$/g;
+  let reg = /^(([a-zA-Zà-ùÀ-Ù\-\.'-]+)(\ )?){0,7}$/g;
   //récupère les valeurs saisies par utilisateurs
   const firstName = document.getElementById("firstName").value;
   const lastName = document.getElementById("lastName").value;

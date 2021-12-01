@@ -1,3 +1,41 @@
+// fait le lien entre la page Accueil et la page produit en récupérant l'Id du Produit :
+async function getProduct() {
+  const str = window.location.href;
+  const url = new URL(str);
+  const recherche_param = new URLSearchParams(url.search);
+  if (recherche_param.has("id")) {
+    let produitUrlId = recherche_param.get("id");
+    //interroge l'API :
+    await fetch(`http://localhost:3000/api/products/${produitUrlId}`)
+      .then((res) => res.json())
+      // affiche les produits sélectionnés
+      .then((produit) => {
+        //affiche les données du produit dans le DOM de la page Produit
+        document.querySelector(
+          ".item__img"
+        ).innerHTML = `<img src="${produit.imageUrl}" alt="${produit.altTxt}">`;
+        document.getElementById("title").innerHTML = produit.name;
+        document.getElementById("price").innerHTML = produit.price;
+        document.getElementById("description").innerHTML = produit.description;
+        //affiche le choix de la couleur
+        produit.colors.forEach((couleur) => {
+          document.getElementById(
+            "colors"
+          ).innerHTML += `<option value="${couleur}">${couleur}</option>`;
+          // renomme la page avec le nom du produit
+          document.title = produit.name;
+        });
+      })
+      .catch(function (err) {
+        console.log("erreur");
+      });
+    // ajoute produit au panier :
+    addItem(produitUrlId);
+  }
+}
+// récupère données du panier
+getProduct();
+
 // AJOUT DE PRODUITS AU PANIER
 function addItem(id) {
   //mise en place un écouteur de l'évènement click
@@ -46,40 +84,3 @@ function addItem(id) {
     }
   });
 }
-// fait le lien entre la page Accueil et la page produit en récupérant l'Id du Produit :
-async function getProduct() {
-  const str = window.location.href;
-  const url = new URL(str);
-  const recherche_param = new URLSearchParams(url.search);
-  if (recherche_param.has("id")) {
-    let produitUrlId = recherche_param.get("id");
-    //interroge l'API :
-    await fetch(`http://localhost:3000/api/products/${produitUrlId}`)
-      .then((res) => res.json())
-      // affiche les produits sélectionnés
-      .then((produit) => {
-        //affiche les données du produit dans le DOM de la page Produit
-        document.querySelector(
-          ".item__img"
-        ).innerHTML = `<img src="${produit.imageUrl}" alt="${produit.altTxt}">`;
-        document.getElementById("title").innerHTML = produit.name;
-        document.getElementById("price").innerHTML = produit.price;
-        document.getElementById("description").innerHTML = produit.description;
-        //affiche le choix de la couleur
-        produit.colors.forEach((couleur) => {
-          document.getElementById(
-            "colors"
-          ).innerHTML += `<option value="${couleur}">${couleur}</option>`;
-          // renomme la page avec le nom du produit
-          document.title = produit.name;
-        });
-      })
-      .catch(function (err) {
-        console.log("erreur");
-      });
-    // ajoute produit au panier :
-    addItem(produitUrlId);
-  }
-}
-// récupère données du panier
-getProduct();

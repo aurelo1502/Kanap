@@ -52,9 +52,11 @@ function addItem(id) {
       qty: qty,
       color: color,
     };
-    console.log(newItem);
+    if (color === '') {
+      window.alert('Il est nécessaire de choisir une couleur');}
+
     // si le panier est déjà sauvegardé récupère les données du localStorage
-    if (
+    else if (
       localStorage.getItem("cart") &&
       localStorage.getItem("cart").length > 0
     ) {
@@ -73,9 +75,9 @@ function addItem(id) {
           parseInt(cart[productPosition].qty) + parseInt(newItem.qty);
         localStorage.setItem("cart", JSON.stringify(cart));
       }
-      //alert
       window.alert("Ce canapé à bien été ajouté");
-    } else {
+      //alert
+    }  else {
       // si le panier n'existait pas on en crée un nouveau dans le localStorage
       let newCart = new Array();
       newCart.push(newItem);

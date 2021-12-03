@@ -48,7 +48,7 @@ async function createProducts() {
   let contentHtml = "";
 
   // s'il y a des produits dans panier
-  if (panier != null) {
+  if (panier != null && panier.length > 0) {
     // crée une boucle des produits du panier pour parcourir le tableau
     for (const produit of panier) {
       let produitId = produit.id;
